@@ -1,0 +1,60 @@
+services:
+
+  mysql:
+    image: mysql:8.3
+    container_name: mysql_gestionqr
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: st2889Xs
+      MYSQL_DATABASE: restaurante_qr
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-pst2889Xs"]
+        interval: 10s
+        timeout: 5s
+        retries: 10
+        start_period: 30s
+    networks:
+      - proxy-network
+      
+
+  backend:
+    build: .
+    container_name: backend_gestionqr
+    restart: unless-stopped
+
+    volumes:
+      - uploads_data:/app/uploads
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+    expose:
+      - "8080"
+    networks:
+      - proxy-network
+
+  frontend:
+    build: ../frontend
+    container_name: frontend_gestionqr
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+    expose:
+      - "80"
+    networks:
+      - proxy-network
+
+volumes:
+  mysql_data:
+  uploads_data:
+
+networks:
+  proxy-network:
+    external: true
