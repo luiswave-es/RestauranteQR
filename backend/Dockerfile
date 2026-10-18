@@ -1,4 +1,4 @@
-FROM tomcat:10.1-jdk21
+FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
