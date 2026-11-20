@@ -893,11 +893,13 @@ export default function CartaCamarero() {
             {!carta && <div className="p-8 text-center text-gray-500">{idioma === "en" ? "Menu not available." : "La carta no esta disponible."}</div>}
 
             {/* Secciones */}
+            <div className="sticky top-0 z-20 bg-white border-b border-gray-200 flex overflow-x-auto">
             {(carta.secciones || []).map(seccion => (
                 <div style={{ float: "left" }} className="px-4 py-2 text-sm font-medium text-gray-600 border-b border-gray-100 bg-gray-50">
                     <a href={'#' + nombreSeccion(seccion)}>{nombreSeccion(seccion)}</a>
                 </div>
             ))}
+            </div>
             {carta && (
                 <div className="max-w-lg mx-auto px-3 py-4 pb-44">
                     {(carta.secciones || []).map(seccion => (
