@@ -903,7 +903,7 @@ export default function CartaCamarero() {
             {carta && (
                 <div className="max-w-lg mx-auto px-3 py-4 pb-44">
                     {(carta.secciones || []).map(seccion => (
-                        <div key={seccion.id} className="mb-4">
+                        <div id={`#${nombreSeccion(seccion)}`} key={seccion.id} className="mb-4">
                             <button
                                 onClick={() => setSeccionesAbiertas(prev => ({ ...prev, [seccion.id]: !prev[seccion.id] }))}
                                 className="w-full text-left px-4 py-2 rounded-xl font-semibold text-sm flex justify-between items-center transition"
@@ -912,7 +912,7 @@ export default function CartaCamarero() {
                                 {seccionesAbiertas[seccion.id] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </button>
                             {seccionesAbiertas[seccion.id] && (
-                                <div id={`#${nombreSeccion(seccion)}`} className="mt-1 space-y-2">
+                                <div className="mt-1 space-y-2">
                                     {(seccion.items || []).map(item => {
                                         const plato = item.plato;
                                         if (!plato?.disponible) return null;
