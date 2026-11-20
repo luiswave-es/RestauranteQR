@@ -894,7 +894,7 @@ export default function CartaCamarero() {
 
             {/* Secciones */}
             {(carta.secciones || []).map(seccion => (
-                <div className="flex px-4 py-2 text-sm font-medium text-gray-600 border-b border-gray-100 bg-gray-50">
+                <div style={{ position: "absolute" }} className="px-4 py-2 text-sm font-medium text-gray-600 border-b border-gray-100 bg-gray-50">
                     <a href={'#' + nombreSeccion(seccion)}>{nombreSeccion(seccion)}</a>
                 </div>
             ))}
