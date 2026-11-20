@@ -903,7 +903,7 @@ export default function CartaCamarero() {
             {carta && (
                 <div className="max-w-lg mx-auto px-3 py-4 pb-44">
                     {(carta.secciones || []).map(seccion => (
-                        <div id={`#${nombreSeccion(seccion)}`} key={seccion.id} className="mb-4">
+                        <div id={`${nombreSeccion(seccion)}`} key={seccion.id} className="mb-4">
                             <button
                                 onClick={() => setSeccionesAbiertas(prev => ({ ...prev, [seccion.id]: !prev[seccion.id] }))}
                                 className="w-full text-left px-4 py-2 rounded-xl font-semibold text-sm flex justify-between items-center transition"
