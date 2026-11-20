@@ -85,7 +85,7 @@ export default function CartaCamarero() {
     const [solicitandoCobro, setSolicitandoCobro] = useState(false);
     const [descargandoTicket, setDescargandoTicket] = useState(false);
 
-        /* menu del dia */
+    /* menu del dia */
     const [menuHoy, setMenuHoy] = useState(null);
 
     /* menu del dia - seleccion por categoria */
@@ -222,10 +222,10 @@ export default function CartaCamarero() {
             }
         };
         cargarConfiguracion();
-    },[!mesa]);
+    }, [!mesa]);
 
     // Inicializar sesion al montar
-    useEffect(() => {        
+    useEffect(() => {
         setVista("bienvenida");
         const saved = getCookie(keySesion);
 
@@ -311,14 +311,15 @@ export default function CartaCamarero() {
     async function confirmarPedido() {
         if (!carrito.length || !token) return;
         setEnviando(true);
-        
+
         try {
             const res = await fetch("/api/publica/pedidos", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     token,
-                    items: carrito.map(i => {;
+                    items: carrito.map(i => {
+                        ;
                         return {
                             platoId: i.plato.id,
                             persona: 1,
@@ -354,7 +355,7 @@ export default function CartaCamarero() {
                 mostrarToast(d.error || "Error al enviar.", "error");
             }
         } catch { mostrarToast("Error de conexion.", "error"); }
-        finally { setEnviando(false); }        
+        finally { setEnviando(false); }
     }
 
     const primary = config?.colorPrimario || "#0d9488";
@@ -661,8 +662,8 @@ export default function CartaCamarero() {
             if (items.length) acc.push({ tipo, items });
             return acc;
         }, []);
-        const diasES = { Lunes:'Lunes', Martes:'Martes', Miercoles:'Miercoles', Jueves:'Jueves', Viernes:'Viernes', Sabado:'Sabado', Domingo:'Domingo' };
-        const diasEN = { Lunes:'Monday', Martes:'Tuesday', Miercoles:'Wednesday', Jueves:'Thursday', Viernes:'Friday', Sabado:'Saturday', Domingo:'Sunday' };
+        const diasES = { Lunes: 'Lunes', Martes: 'Martes', Miercoles: 'Miercoles', Jueves: 'Jueves', Viernes: 'Viernes', Sabado: 'Sabado', Domingo: 'Domingo' };
+        const diasEN = { Lunes: 'Monday', Martes: 'Tuesday', Miercoles: 'Wednesday', Jueves: 'Thursday', Viernes: 'Friday', Sabado: 'Saturday', Domingo: 'Sunday' };
         const nombreDia = idioma === 'en' ? (diasEN[menuHoy.dia] || menuHoy.dia) : (diasES[menuHoy.dia] || menuHoy.dia);
 
         return (
@@ -817,11 +818,11 @@ export default function CartaCamarero() {
                                             </div>
                                         ))}
                                     </div>
-                                </div>                                
+                                </div>
                                 <div className="flex justify-between items-center border-t pt-4">
                                     <p className="font-semibold text-gray-700">Total</p>
                                     <p className="text-xl font-bold" style={{ color: primary }}>{totalCarrito.toFixed(2)} €</p>
-                                </div>                                
+                                </div>
                             </div>
                             <div className="px-5 pb-6 pt-3 border-t sticky bottom-0 bg-white">
                                 <button onClick={confirmarPedido} disabled={enviando || carrito.length === 0}
@@ -892,6 +893,11 @@ export default function CartaCamarero() {
             {!carta && <div className="p-8 text-center text-gray-500">{idioma === "en" ? "Menu not available." : "La carta no esta disponible."}</div>}
 
             {/* Secciones */}
+            {(carta.secciones || []).map(seccion => (
+                <div className="px-4 py-2 text-sm font-medium text-gray-600 border-b border-gray-100 bg-gray-50" key={seccion.id}>
+                    <a href={'#' + nombreSeccion(seccion)}>{nombreSeccion(seccion)}</a>
+                </div>
+            ))}
             {carta && (
                 <div className="max-w-lg mx-auto px-3 py-4 pb-44">
                     {(carta.secciones || []).map(seccion => (
@@ -904,7 +910,7 @@ export default function CartaCamarero() {
                                 {seccionesAbiertas[seccion.id] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </button>
                             {seccionesAbiertas[seccion.id] && (
-                                <div className="mt-1 space-y-2">
+                                <div id={`#${nombreSeccion(seccion)}`} className="mt-1 space-y-2">
                                     {(seccion.items || []).map(item => {
                                         const plato = item.plato;
                                         if (!plato?.disponible) return null;
